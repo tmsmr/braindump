@@ -1,5 +1,7 @@
 # braindump
 
+![Brian](https://raw.githubusercontent.com/opthomas-prime/braindump/master/braindump.png)
+
 ## Introduction
 I'm getting older - and i keep forgetting stuff.
 I'm not talking about contact data, user credentials, technical documentations and such things.
