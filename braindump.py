@@ -59,8 +59,7 @@ class Brain:
             return False
         return self.index_entry(entry_path, entry_name)
 
-    @staticmethod
-    def choose_result(results):
+    def edit_result_list(self, results):
         from whoosh import highlight
 
         class TerminalFormatter(highlight.Formatter):
@@ -69,37 +68,35 @@ class Brain:
 
             def format_token(self, text, token, replace=False):
                 no_color = '\033[0m'
-                hi_color = '\033[0;33m'
+                hi_color = '\033[0;32m'
                 return hi_color + highlight.get_text(text, token, replace) + no_color
 
         results.formatter = TerminalFormatter()
+        for i, result in enumerate(results):
+            print(str(i + 1) + '. ' + result.highlights('content'))
         while True:
-            for i, result in enumerate(results):
-                print(str(i + 1) + '. ' + result.highlights('content'))
             try:
                 num = input('number to open: ')
+                if len(num) == 0:
+                    return None
                 res_index = int(num) - 1
                 if 0 <= res_index < len(results):
-                    return results[res_index]
+                    self.edit_entry(results[res_index]['entry'])
             except ValueError:
                 continue
             except KeyboardInterrupt:
                 return None
 
     def remember(self, tokens, limit=10):
-        from whoosh.query import And, Term
-        terms = []
-        for token in tokens:
-            terms.append(Term('content', token))
-        query = And(terms)
+        from whoosh.qparser import QueryParser
+        parser = QueryParser('content', schema=self.index.schema)
+        query = parser.parse(' '.join(['*' + token + '*' for token in tokens]))
         with self.index.searcher() as searcher:
             results = searcher.search(query, limit=limit)
             if len(results) == 1:
                 self.edit_entry(results[0]['entry'])
             elif len(results) > 1:
-                result = self.choose_result(results)
-                if result:
-                    self.edit_entry(result['entry'])
+                self.edit_result_list(results)
             else:
                 return False
         return True
@@ -108,7 +105,7 @@ class Brain:
 def get_args():
     from argparse import ArgumentParser
     parser = ArgumentParser('braindump')
-    parser.add_argument('operation', help='the operation: dump (d), remember (r)')
+    parser.add_argument('operation', help='the operation: dump, remember (rem)')
     parser.add_argument('terms', help='search terms (for remember operation)', nargs='*')
     parser.add_argument('--config', default='~/.brain.conf', help='config file (defaults to ~/.brain.conf)')
     return parser.parse_args()
@@ -145,10 +142,10 @@ def main():
     args = get_args()
     config = get_conf(args.config)
     brain = Brain(config)
-    if args.operation == 'dump' or args.operation == 'd':
+    if args.operation == 'dump':
         if not brain.dump_entry():
             print('unable to dump entry')
-    elif args.operation == 'remember' or args.operation == 'r':
+    elif args.operation == 'remember' or args.operation == 'rem':
         if len(args.terms) < 1:
             print('no terms given')
         else:
