@@ -11,6 +11,7 @@ class Brain:
         from whoosh.fields import TEXT, ID, Schema
         from whoosh.index import create_in, open_dir
         self.editor = config.get('brain', 'editor')
+        self.result_limit = int(config.get('brain', 'result-limit'))
         self.storage_path = os.path.expanduser(config.get('brain', 'storage'))
         self.index_path = os.path.expanduser(config.get('brain', 'index'))
         if not os.path.exists(self.storage_path):
@@ -87,12 +88,12 @@ class Brain:
             except KeyboardInterrupt:
                 return None
 
-    def remember(self, tokens, limit=10):
+    def remember(self, tokens):
         from whoosh.qparser import QueryParser
         parser = QueryParser('content', schema=self.index.schema)
         query = parser.parse(' '.join(['*' + token + '*' for token in tokens]))
         with self.index.searcher() as searcher:
-            results = searcher.search(query, limit=limit)
+            results = searcher.search(query, limit=self.result_limit)
             if len(results) == 1:
                 self.edit_entry(results[0]['entry'])
             elif len(results) > 1:
@@ -130,6 +131,7 @@ def get_conf(config_path):
         config.set('brain', 'storage', '~/.brain')
         config.set('brain', 'index', '~/.brain/index')
         config.set('brain', 'editor', guess_editor(config_path))
+        config.set('brain', 'result-limit', '10')
         with open(expanded_path, 'w') as configfile:
             config.write(configfile)
         return config
