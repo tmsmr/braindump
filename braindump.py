@@ -115,7 +115,7 @@ def get_args():
     parser = ArgumentParser('braindump.py')
     parser.add_argument('operation', help='the operation: dump or remember (rem)')
     parser.add_argument('terms', help='search terms (for remember operation)', nargs='*')
-    parser.add_argument('--config', default='~/.brain.conf', help='config file (defaults to ~/.brain.conf)')
+    parser.add_argument('--config', default='~/.braindump.conf', help='config file (defaults to ~/.braindump.conf)')
     return parser.parse_args()
 
 
@@ -135,8 +135,8 @@ def get_conf(config_path):
     if not os.path.isfile(expanded_path):
         config = ConfigParser()
         config.add_section('brain')
-        config.set('brain', 'storage', '~/.brain')
-        config.set('brain', 'index', '~/.brain/index')
+        config.set('brain', 'storage', '~/.braindump')
+        config.set('brain', 'index', '~/.braindump/index')
         config.set('brain', 'editor', guess_editor(config_path))
         config.set('brain', 'result-limit', '10')
         config.set('brain', 'delimiter', '---')
