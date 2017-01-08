@@ -75,12 +75,11 @@ class Brain:
                 return hi_color + highlight.get_text(text, token, replace) + no_color
 
         results.formatter = TerminalFormatter()
-        print('multiple memories found (return to close):')
         for i, result in enumerate(results):
             print(bold + str(i + 1) + no_color + '. ...' + result.highlights('content') + '...')
         while True:
             try:
-                num = input('number to open: ')
+                num = input('number to open, return to close: ')
                 if len(num) == 0:
                     return None
                 res_index = int(num) - 1
