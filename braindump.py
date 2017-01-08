@@ -12,6 +12,7 @@ class Brain:
         from whoosh.index import create_in, open_dir
         self.editor = config.get('brain', 'editor')
         self.result_limit = int(config.get('brain', 'result-limit'))
+        self.delimiter = config.get('brain', 'delimiter')
         self.storage_path = os.path.expanduser(config.get('brain', 'storage'))
         self.index_path = os.path.expanduser(config.get('brain', 'index'))
         if not os.path.exists(self.storage_path):
@@ -38,8 +39,12 @@ class Brain:
             return False
         writer = self.index.writer()
         with open(entry_path) as entry_file:
-            entry_content = ''.join(entry_file.readlines())
-        writer.update_document(entry=entry_name, content=entry_content)
+            content = []
+            for line in entry_file.readlines():
+                if line.startswith(self.delimiter):
+                    break
+                content.append(line)
+        writer.update_document(entry=entry_name, content=''.join(content))
         writer.commit()
         return True
 
@@ -134,6 +139,7 @@ def get_conf(config_path):
         config.set('brain', 'index', '~/.brain/index')
         config.set('brain', 'editor', guess_editor(config_path))
         config.set('brain', 'result-limit', '10')
+        config.set('brain', 'delimiter', '---')
         with open(expanded_path, 'w') as configfile:
             config.write(configfile)
         return config
