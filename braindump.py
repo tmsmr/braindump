@@ -112,7 +112,7 @@ class Brain:
 
 def get_args():
     from argparse import ArgumentParser
-    parser = ArgumentParser('braindump.py')
+    parser = ArgumentParser()
     parser.add_argument('operation', help='the operation: dump or remember (rem)')
     parser.add_argument('terms', help='search terms (for remember operation)', nargs='*')
     parser.add_argument('--config', default='~/.braindump.conf', help='config file (defaults to ~/.braindump.conf)')
