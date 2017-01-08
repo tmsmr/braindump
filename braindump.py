@@ -61,6 +61,10 @@ class Brain:
         return self.index_entry(entry_path, entry_name)
 
     def edit_result_list(self, results):
+        no_color = '\033[0m'
+        hi_color = '\033[0;32m'
+        bold = '\033[1m'
+
         from whoosh import highlight
 
         class TerminalFormatter(highlight.Formatter):
@@ -68,13 +72,12 @@ class Brain:
                 pass
 
             def format_token(self, text, token, replace=False):
-                no_color = '\033[0m'
-                hi_color = '\033[0;32m'
                 return hi_color + highlight.get_text(text, token, replace) + no_color
 
         results.formatter = TerminalFormatter()
+        print('multiple memories found (return to close):')
         for i, result in enumerate(results):
-            print(str(i + 1) + '. ' + result.highlights('content'))
+            print(bold + str(i + 1) + no_color + '. ...' + result.highlights('content') + '...')
         while True:
             try:
                 num = input('number to open: ')
