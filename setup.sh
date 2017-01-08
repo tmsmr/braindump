@@ -8,4 +8,4 @@ sudo install -Tv -m 777 braindump-master/braindump.py /usr/local/bin/braindump.p
 sudo ln -vs /usr/local/bin/braindump.py /usr/local/bin/brian
 sudo pip3 install whoosh
 cd $STARTDIR
-rm -r /tmp/braindump
+rm -rv /tmp/braindump
