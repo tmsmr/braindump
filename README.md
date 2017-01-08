@@ -20,7 +20,8 @@ tl;dr: Helps to remember stuff that wont fit in any scheme.
 - Python 3 (build and tested with 3.6.0)
 - Whoosh - https://pypi.python.org/pypi/Whoosh (build and tested with 2.7.4):
     - `sudo pip3 install whoosh`
-- Build and tested on Arch Linux. Mac OS shouldn't be a problem. Theoretically it should work on Windows too (And BSD)...
+- Build and tested on Arch Linux. Mac OS and BSD shouldn't be a problem.
+Theoretically it should work on Windows too...
 
 ## Installation
 - It's one single script. Place it where you want.
@@ -37,7 +38,9 @@ curl https://raw.githubusercontent.com/opthomas-prime/braindump/master/setup.sh 
 Initially i wanted to name the command/executable `brain` - but i kept typing `brian` accidentally... As well i found it cocky to introduce a command named `brain`. Besides that, i think Brian is a nice name.
 
 ## Usage
-- Normally you don't need to do anything before you start. The configuration should be created with default values. Just write down your first thing you want to remember with:
+- Normally you don't need to do anything before you can start using this.
+The configuration should be created with default values.
+Just write down the first thing you want to remember with:
 
 ```
 ➜  ~ brian dump
