@@ -2,6 +2,9 @@
 
 ![Brian](https://raw.githubusercontent.com/opthomas-prime/braindump/master/braindump.png)
 
+## Org mode FTW
+I discovered Org mode for me. I won't maintain this anymore :slepping:...
+
 ## Introduction
 I'm getting older - and i keep forgetting stuff.
 I'm not talking about contact data, user credentials, technical documentations and such things.
@@ -50,15 +53,3 @@ Just write down the first thing you want to remember with:
 - There are basically two operations: `dump` and `remember` (you can use `rem` for that too):
     - `dump`: opens an editor for a new entry (memory) and indexes the contents after the editor is closed.
     - `remember [terms [terms ...]]`: lookup things via one or more search terms. If there is exactly one hit - the entry is opened automatically. If there are several hits - you get a list of results to choose from.
-- Example:
-
-```
-
-
-```
-
-## How it works
-
-## Document format
-
-## Hints
