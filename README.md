@@ -3,7 +3,7 @@
 ![Brian](https://raw.githubusercontent.com/opthomas-prime/braindump/master/braindump.png)
 
 ## Org mode FTW
-I discovered Org mode for me. I won't maintain this anymore :( ...
+I discovered Org mode for me. I won't maintain this anymore...
 
 ## Introduction
 I'm getting older - and i keep forgetting stuff.
